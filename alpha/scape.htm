@@ -1,0 +1,186 @@
+<html>
+<head>
+<title>Scape Demo</title>
+<style>
+body{color:white}
+img{height:100%}
+</style>
+<script src="scape.js">
+</script><script>
+console.log("audioSetup boundary");
+// provide initial values for audio
+function audioSetup()
+{
+    console.log("audioSetup start");
+    vol = document.getElementById("mainVol");
+
+    // setup channel
+    channelSetup(document.getElementById("nearVol"),
+        document.getElementById("nact"),
+        scape.sound.near);
+    // setup channel
+    channelSetup(document.getElementById("midVol"),
+        document.getElementById("mact"),
+        scape.sound.mid);
+    // setup channel
+    channelSetup(document.getElementById("farVol"),
+        document.getElementById("fact"),
+        scape.sound.far);
+
+    // configure background
+    main1 = document.getElementById("main1");
+    main1.src = scape.sound.main.list[0];
+    main1.volume = vol.value / 100;
+    //main.ontimeupdate = audioUpdate();
+    main2 = document.getElementById("main2");
+    main2.src = scape.sound.main.list[0];
+    main2.volume = vol.value / 100;
+    //main.ontimeupdate = audioUpdate();
+    main1.play();
+};
+function channelSetup(vol, act, sounds)
+{
+    // set defaults for channel
+    vol.value = sounds.vol*100;
+    act.value = sounds.act*100;
+};
+console.log("audioSetup boundary");
+</script><script>
+console.log("audioUpdate boundary");
+// implement custom looping to avoid audio gap
+// todo: add fade last second over first
+function audioUpdate()
+{
+    console.log("audioUpdate start");
+    vol = document.getElementById("mainVol");
+
+    // loop background sound
+    ch1 = document.getElementById("main1");
+    ch2 = document.getElementById("main2");
+    fade = 4;
+    if (((ch1.duration - ch1.currentTime) < fade) && (!ch1.ended))
+    {
+        ch2.play();
+    } else if (((ch2.duration - ch2.currentTime) < fade) && (!ch2.ended))
+    {
+        ch1.play();
+    };
+    fadeio(ch1, vol, fade - 1);
+    fadeio(ch2, vol, fade - 1);
+
+    // update channel
+    channelUpdate(document.getElementById("near1"),
+        document.getElementById("near2"),
+        document.getElementById("nearVol"),
+        document.getElementById("nact"),
+        scape.sound.near);
+
+    // update channel
+    channelUpdate(document.getElementById("mid1"),
+        document.getElementById("mid2"),
+        document.getElementById("midVol"),
+        document.getElementById("mact"),
+        scape.sound.mid);
+
+    // update channel
+    channelUpdate(document.getElementById("far1"),
+        document.getElementById("far2"),
+        document.getElementById("farVol"),
+        document.getElementById("fact"),
+        scape.sound.far);
+};
+function fadeio(ch1, vol, len)
+{
+    remaining = ch1.duration - ch1.currentTime;
+    if (ch1.currentTime < len)
+    {
+        ch1.volume = (vol.value / 100) * (ch1.currentTime / len);
+    } else if (remaining < len)
+    {
+        ch1.volume = (vol.value / 100) * (remaining / len);
+    } else {
+        ch1.volume = (vol.value / 100);
+    };
+    
+};
+function channelUpdate(fg1, fg2, vol, act, sounds)
+{
+    // set volume
+    mainVol = document.getElementById("mainVol"),
+    fg1.volume = (mainVol.value / 100) * (vol.value / 100);
+    fg2.volume = (mainVol.value / 100) * (vol.value / 100);
+    // randomly play near foreground sound
+    if ((Math.floor(Math.random() * 100) - act.value) < 1)
+    {
+        if ((fg1.currentTime > 0) && (fg1.currentTime < fg1.duration))
+        {
+            fg2.src = sounds.list[Math.floor(Math.random() * sounds.list.length)];
+            fg2.play();
+        } else {
+            fg1.src = sounds.list[Math.floor(Math.random() * sounds.list.length)];
+            fg1.play();
+        };
+    };
+};
+console.log("audioUpdate boundary");
+</script>
+
+</head>
+<body bgcolor="000000" onload="audioSetup()">
+
+<img src="gif/woodland-stream4.gif"></img>
+
+<table>
+<!-------------------------------------------------------------------------->
+<tr><td></td><td>Volume</td><td>Activity</td><td>Channel 1</td><td>Channel 2</td></tr>
+<tr><td>Main:</td><td>
+<input type="range" min="1" max="100" value="10" class="slider" id="mainVol">
+</td><td>
+</td><td>
+<audio controls id="main1" ontimeupdate="audioUpdate()">
+</audio>
+</td><td>
+<audio controls id="main2" ontimeupdate="audioUpdate()">
+</audio>
+</td></tr>
+<!-------------------------------------------------------------------------->
+<tr><td>Near:</td><td>
+<input type="range" min="1" max="100" value="10" class="slider" id="nearVol">
+</td><td>
+<input type="range" min="1" max="100" value="10" class="slider" id="nact">
+</td><td>
+<audio controls id="near1">
+</audio>
+</td><td>
+<audio controls id="near2">
+</audio>
+</td></tr>
+<!-------------------------------------------------------------------------->
+<tr><td>Mid:</td><td>
+<input type="range" min="1" max="100" value="10" class="slider" id="midVol">
+</td><td>
+<input type="range" min="1" max="100" value="10" class="slider" id="mact">
+</td><td>
+<audio controls id="mid1">
+</audio>
+</td><td>
+<audio controls id="mid2">
+</audio>
+</td></tr>
+<!-------------------------------------------------------------------------->
+<tr><td>Far:</td><td>
+<input type="range" min="1" max="100" value="10" class="slider" id="farVol">
+</td><td>
+<input type="range" min="1" max="100" value="10" class="slider" id="fact">
+</td><td>
+<audio controls id="far1">
+</audio>
+</td><td>
+<audio controls id="far2">
+</audio>
+</td></tr>
+<!-------------------------------------------------------------------------->
+</table>
+</body>
+</html>
+
