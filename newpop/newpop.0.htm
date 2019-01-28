@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Population</title>
+
+<script src="pop.5.js">
+//pop=[];
+// import population data
+</script>
+<script src="skel.js"></script>
+
+<script>
+var txt='', poplen=100;
+function getval(proto) {
+	var val = '', parts=[], tmp=0, lwr=0, upr=0, flt=0;
+	switch (Object.prototype.toString.call(proto)) {
+		case Object.prototype.toString.call(''):
+			// attempt to split the string and randomize
+			parts = proto.split('-');
+			if (parts.length > 1) {
+				//val = proto;
+				if (parseInt(parts[0]) == parseFloat(parts[0])) {
+					lwr = parseInt(parts[0]);
+				} else {
+					flt = 1;
+					lwr = parseFloat(parts[0]);
+				};
+				if (parseInt(parts[1]) == parseFloat(parts[1])) {
+					lwr = parseInt(parts[1]);
+				} else {
+					flt = 1;
+					lwr = parseFloat(parts[1]);
+				};
+				if (flt == 1) {
+					val = (Math.random() * (parseFloat(parts[1]) - parseFloat(parts[0]))) + parseFloat(parts[0]);
+				} else {
+					val = Math.floor(Math.random() * (parseInt(parts[1]) - parseInt(parts[0])) + parseInt(parts[0]));
+				};
+			} else {
+				// else return value
+				if (parseInt(parts[0]) == parseFloat(parts[0])) {
+					val = parseInt(parts[0]);
+				} else {
+					lwr = parseFloat(parts[0]);
+				};
+			};
+			break;
+		case Object.prototype.toString.call([]):
+			// pick one from the list
+			val = proto[Math.floor(Math.random() * proto.length)];
+			break;
+	};
+	return val;
+};
+function gen(struct, population) {
+	var txt="", vals=[], full=[], parts=[], proportion=[], segments={}, newpop=[],each, partot;
+	console.log("\ngen pop " + population.length);
+	console.log("gen struct" + JSON.stringify(struct));
+	for (each in struct) {
+		console.log("gen each " + each + ' ' + population.length);
+		switch (Object.prototype.toString.call(struct[each])) {
+			case Object.prototype.toString.call(''):
+			case Object.prototype.toString.call([]):
+				console.log("value");
+				vals.push(each);
+				break;
+			case Object.prototype.toString.call({}):
+				console.log("obj");
+				if (struct[each]['.'].length > 0) {
+					// apply as partial
+					console.log("partial " + struct[each]['.']);
+					proportion.push(each);
+					//gen(struct[each], population)
+				} else {
+					// apply to all members of pop
+					console.log("full");
+					full.push(each);
+					//gen(struct[each], population)
+				};
+				break;
+		};
+	};
+	
+	console.log("gen vals " + JSON.stringify(vals));
+	for (indx in population) {
+		// add values to each entry
+		for (each in vals) {
+			population[indx][vals[each]] = getval(struct[vals[each]]);
+		};
+	};
+	// process sub-objects
+	console.log("gen full " + JSON.stringify(full));
+	for (each in full) {
+		console.log("gen struct["+full[each]+"] = " + JSON.stringify(struct[full[each]]));
+		gen(struct[full[each]], population);
+		//population = newpop;
+	};
+	console.log("gen proportion " + JSON.stringify(proportion));
+	// make proportional segments
+	if (proportion.length > 0) {
+		// generate a proportionally sized list of keys
+		for (each in proportion) {
+			for (indx=0; indx<getval(struct[proportion[each]]['.']); indx++) {
+				parts.push(proportion[each]);
+			};
+			segments[proportion[each]] = [];
+		};
+		console.log("gen segments " + JSON.stringify(segments));
+		for (each in population) {
+			segments[getval(parts)].push(population[each])
+		}
+		newpop = [];
+		for (each in segments) {
+			console.log("gen segments " + JSON.stringify(segments[each]));
+			//console.log("gen prop "+full[each]+"] = " + JSON.stringify(struct[full[each]]));
+			gen(struct[each], segments[each]);
+			//population = newpop;
+		};
+	};
+	//console.log("gen newpop " + newpop.length);
+	console.log("\ngen pop " + population.length);
+	/**/
+	return population
+};
+var fullpop = [];
+var newpop = [];
+var indx = 0;
+console.log("fullpop " + fullpop.length);
+for (indx=0; indx<poplen; indx++) {
+	fullpop.push({});
+};
+console.log("fullpop " + fullpop.length);
+pop = gen(skel, fullpop);
+</script>
+<script>
+// setup info for display script
+// filter / sort by multiple (key, comparator, value) sets
+//fs = [['age', '>', 15], ['age', '<', 55], ['age', '+', ''], ['str', '-', ''], ];
+fs = [];
+fsopt = ['>', '<','>=', '<=', '=', '+', '-'];
+function filter_sort(population, fltsrt=[]) {
+    var oldpop, newpop;
+    oldpop = population.slice();
+    newpop = [];
+    //document.getElementById("ts").innerHTML += "<br><br>filter_sort()";
+    for (indx in fltsrt) {
+        // move relevant oldpop into newpop
+        //document.getElementById("ts").innerHTML += "<br>" + fs[indx];
+        newpop = [];
+        switch(fltsrt[indx][1]) {
+            case '>':
+                for (each in oldpop) {
+                    if (oldpop[each][fltsrt[indx][0]] > fltsrt[indx][2]) {
+                        newpop.push(oldpop[each]);
+                    };
+                };
+                break;
+            case '<':
+                for (each in oldpop) {
+                    if (oldpop[each][fltsrt[indx][0]] < fltsrt[indx][2]) {
+                        newpop.push(oldpop[each]);
+                    };
+                };
+                break;
+            case '>=':
+                for (each in oldpop) {
+                    if (oldpop[each][fltsrt[indx][0]] >= fltsrt[indx][2]) {
+                        newpop.push(oldpop[each]);
+                    };
+                };
+                break;
+            case '<=':
+                for (each in oldpop) {
+                    if (oldpop[each][fltsrt[indx][0]] <= fltsrt[indx][2]) {
+                        newpop.push(oldpop[each]);
+                    };
+                };
+                break;
+            case '=':
+                for (each in oldpop) {
+                    if (oldpop[each][fltsrt[indx][0]] == fltsrt[indx][2]) {
+                        newpop.push(oldpop[each]);
+                    };
+                };
+                break;
+            case '+':
+                // sort ascending
+                for (each in oldpop) {
+                    pos = 0;
+                    for (item in newpop) {
+                        if (oldpop[each][fltsrt[indx][0]] > newpop[item][fltsrt[indx][0]]) {
+                            pos = item;
+                            pos++;
+                        };
+                    };
+                    newpop.splice(pos, 0, oldpop[each]);
+                };
+                break;
+            case '-':
+                // sort descending
+                for (each in oldpop) {
+                    pos = 0;
+                    for (item in newpop) {
+                        if (oldpop[each][fltsrt[indx][0]] < newpop[item][fltsrt[indx][0]]) {
+                            pos = item;
+                            pos++;
+                        };
+                    };
+                    newpop.splice(pos, 0, oldpop[each]);
+                };
+                break;
+        };
+        oldpop = newpop.slice();
+    };
+    return newpop;
+};
+function filtsort(population) {
+    // return the filtered and sorted population
+    var txt="", keys=[], key, newpop=[], comp, comps=["+", "-", "=", "s"];
+    var oldpop, newpop, indx;
+    //document.getElementById("ts").innerHTML += "<br><br>filtsort: entry ";
+    if (population.length < 1) {
+        return [];
+    };
+    for (key in population[0]) {
+    //for (key in fsopt) {
+        keys.push(key);
+    };
+    oldpop = population.slice();
+    // start filter/sort
+    txt += "<table border='1'>";
+    txt += "<tr><td colspan=\"3\">Alteration</td><td colspan=\"2\">Change</td><td colspan=\"3\">Priority</td></tr>";
+    txt += "<tr><td colspan=\"3\">Start</td><td colspan=\"2\">" + oldpop.length + "</td><td colspan=\"3\">Reset</td></tr>";
+    // filter population
+    for (indx in fs) {
+        txt += '<tr>';
+        for (each in fs[indx]) {
+            txt += "<td>" + fs[indx][each] + "</td>";
+        };
+        if (fs[indx].length > 1) {
+            //document.getElementById("ts").innerHTML += "<br><br>filtsort: oldpop " + oldpop.length + " newpop " + newpop.length;
+            //document.getElementById("ts").innerHTML += "<br>filtsort: indx " + indx;
+            //document.getElementById("ts").innerHTML += "<br>filtsort: fs[indx] " + fs[indx];
+            newpop = filter_sort(oldpop.slice(), [fs[indx]]);
+            // add column to denote change in length
+            //document.getElementById("ts").innerHTML += "<br>filtsort: oldpop " + oldpop.length + " newpop " + newpop.length;
+            // report change in length
+            //document.getElementById("ts").innerHTML += "<br>filtsort: oldpop " + oldpop.length + " newpop " + newpop.length;
+            txt += "<td>" + (newpop.length - oldpop.length) + "</td><td>" + newpop.length + "</td>";
+            //txt += "<td>" + oldpop.length + "</td><td>" + newpop.length + "</td>";
+            // update working population
+            oldpop = newpop.slice();
+        };
+        // add controls to adjust filters
+        txt += "<td><input type=\"button\" value=\"Down\" onclick=\"fs_order(" + indx + ", '+');\"></input></td>";
+        txt += "<td><input type=\"button\" value=\"Up\" onclick=\"fs_order(" + indx + ", '-');\"></input></td>";
+        txt += "<td><input type=\"button\" value=\"X\" onclick=\"fs_order(" + indx + ", '0');\"></input></td>";
+        // close row
+        txt += '</tr>';
+    };
+    // show final result
+    txt += "<tr><td colspan=\"3\">Finish</td><td colspan=\"2\">" + oldpop.length + "</td></tr>";
+    // add filter / sort
+    // add key
+    txt += "<tr>"
+    txt += "<td><select name=\"key\", id=\"key\">";
+    for (key in keys) {
+        txt += "<option value=\"" + keys[key] + "\">" + keys[key] + "</option>";
+    };
+    txt += "</select></td>";
+    // add comparison
+    txt += "<td><select name=\"comp\" id=\"comp\">";
+    for (comp in fsopt) {
+        txt += "<option value=\""+ fsopt[comp] +"\">"+ fsopt[comp] +"</option>";
+    };
+    txt += "</select></td>";
+    // add value
+    txt += "<td><input type=\"text\", id=\"val\"></input></td>";
+    // add update button
+    txt += "<td colspan=\"2\"><button type=\"button\" onclick=\"fs_add()\">Add</button></td>";
+    // close add filter / sort
+    txt += "</tr>";
+    txt += "</table>";
+    // display results
+    document.getElementById("fs").innerHTML = txt;
+    // return results
+    //return oldpop
+    return oldpop; //filter_sort(population)
+};
+
+function fs_order(indx, adj) {
+    // adjust the order of the filter/sort criteria
+    var each, temp = [], newpop=[], indx;
+    //document.getElementById("ts").innerHTML += "<br><br>fs_order(" + indx +','+ adj + ")<br>";
+    //document.getElementById("ts").innerHTML += "<br>fs_order fs " + fs;
+    switch(adj) {
+        case '+':
+            // move this entry closer to the high
+            //document.getElementById("ts").innerHTML += "<br>fs_order fs+ " + fs;
+            if (indx < (fs.length-1)) {
+                temp = fs[indx];
+                fs[indx] = fs[indx + 1];
+                fs[indx + 1] = temp;
+            };
+            //document.getElementById("ts").innerHTML += "<br>fs_order fs+ " + fs;
+            break;
+        case '-':
+            // move this entry closer to the low
+            //document.getElementById("ts").innerHTML += "<br>fs_order fs- " + fs;
+            if (indx > 0) {
+                temp = fs[indx];
+                fs[indx] = fs[indx - 1];
+                fs[indx - 1] = temp;
+            };
+            //document.getElementById("ts").innerHTML += "<br>fs_order fs- " + fs;
+            break;
+        case '0':
+            // remove this entry
+            //document.getElementById("ts").innerHTML += "delete fs[" + indx + "]<br>"
+            //fs.pop(indx);
+            delete fs[indx];
+            //document.getElementById("ts").innerHTML += fs + '<br>';
+            for (each in fs) {
+                temp.push(fs[each]);
+            };
+            //delete temp
+            //document.getElementById("ts").innerHTML += temp + '<br>';
+            //fs = temp.slice();
+            break;
+    };
+    // rerun filtsort
+    newpop = filtsort(pop);
+    display(newpop);
+};
+
+function fs_add() {
+    var newpop=[], oldpop=[], newfs=[], each;
+    
+    //document.getElementById("ts").innerHTML += "<br><br>fs_add()";
+    //document.getElementById("ts").innerHTML += "<br>fs_add key   " + document.getElementById("key").value;
+    //document.getElementById("ts").innerHTML += "<br>fs_add comp  " + document.getElementById("comp").value;
+    //document.getElementById("ts").innerHTML += "<br>fs_add val   " + document.getElementById("val").value;
+    //fs.splice(0, 0, [document.getElementById("key").value, document.getElementById("comp").value, document.getElementById("val").value, ]);
+    fs.push([document.getElementById("key").value, document.getElementById("comp").value, document.getElementById("val").value, ]);
+    fs_order(0, '-');
+};
+
+function display(population) {
+    var x, txt = "", each;
+    var oldpop, newpop;
+    cols = ["firstname", "lastname", "age", "years", "background", "skin", "hair", "eyes", "sex", "gender", "int", "chr", "wis", "str", "dex", "con", ];
+    txt += "<table border='1'>";
+    keys = [];
+    // add headers for columns
+    txt += "<tr>"
+    //for (x in population[0]) {
+    for (x in cols) {
+        txt += "<th>";
+        txt += cols[x];
+        keys.push(x);
+        txt += "</th>";
+    };
+    //oldpop = filtsort(population);
+    oldpop = filtsort(pop);
+    txt += "</tr>";
+    for (x in oldpop) {
+        txt += "<tr>";
+        //for (each in population[0]) {
+        for (each in cols) {
+            txt += "<td>";
+            txt += oldpop[x][cols[each]];
+            txt += "</td>";
+        };
+        txt += "</tr>";
+    }
+    txt += "</table>"
+    document.getElementById("demo").innerHTML = txt;
+};
+
+function savedata() {
+    var a = document.createElement('a');
+    a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(JSON.stringify(pop)));
+    a.setAttribute('download', 'population.json');
+    a.setAttribute("style", "display: none;");
+    document.body.appendChild(a); 
+    a.click()
+    a.remove()
+};
+
+function loaddata() {
+    var files = document.getElementById('selectFiles').files;
+  console.log(files);
+  if (files.length <= 0) {
+    return false;
+  }
+
+  var fr = new FileReader();
+
+  fr.onload = function(e) { 
+  console.log(e);
+    pop = JSON.parse(e.target.result).slice();
+    //var formatted = JSON.stringify(result, null, 2);
+    //document.getElementById('result').value = formatted;
+    //document.getElementById("ts").innerHTML += "<br>e.target.result:" + e.target.result;
+  }
+
+  fr.readAsText(files.item(0));
+    pop = JSON.parse(fr.result).slice();
+    //document.getElementById("ts").innerHTML += "<br>pop.length:" + pop.length;
+    display(pop)
+};
+
+</script>
+</head>
+<body>
+
+<h2>Population</h2>
+<form>
+Name: <input type='text' id='name'></input><br>
+Source: <input type='text' id='source'></input><br>
+<input type='button' onclick="savedata()" value='Save'></input><input type="file" id="selectFiles" value="Import" /><input type='button' onclick="loaddata()" value='Load'></input>
+</form>
+<hr>
+Filters / Sorts:<br>
+<p id="fs"></p>
+<p id="ts"></p>
+<hr>
+
+<p id="demo"></p>
+
+
+<script>
+display(pop);
+</script>
+
+</body>
+</html>
+
