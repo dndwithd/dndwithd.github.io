@@ -11,6 +11,7 @@ skel = {
 				"THOMAS","HERNANDEZ","MOORE","MARTIN","JACKSON","THOMPSON","WHITE","LOPEZ","LEE","GONZALEZ","HARRIS","CLARK","LEWIS","ROBINSON",
 				"WALKER","PEREZ","HALL","YOUNG","ALLEN","SANCHEZ","WRIGHT","KING","SCOTT","GREEN","BAKER","ADAMS","NELSON","HILL","RAMIREZ",
 				"CAMPBELL","MITCHELL","ROBERTS","CARTER","PHILLIPS","EVANS","TURNER","TORRES",],
+			"nickname": ["",],
 			"gender": {
 				".": "",
 				"neutral": {
@@ -1054,7 +1055,8 @@ skel = {
 		"acolyte": {
 			".": "1",
 			"background": ["acolyte"],
-			"desc": "Acolytes are shaped by their experience in temples or other religious communities. Their study of the history and tenets of their faith and their relationships to temples, shrines, or hierarchies affect their mannerisms and ideals. Their flaws might be some hidden hypocrisy or heretical idea, or an ideal or bond taken to an extreme.",
+			"desc": ["Acolytes are shaped by their experience in temples or other religious communities. Their study of the history and tenets of their faith and their relationships to temples, shrines, or hierarchies affect their mannerisms and ideals. Their flaws might be some hidden hypocrisy or heretical idea, or an ideal or bond taken to an extreme.",],
+			"specialty": ["",],
 			"trait": [
 				"I idolize a particular hero of my faith, and constantly refer to that person's deeds and example.",
 				"I can find common ground between the fiercest enemies, empathizing with them and always working toward peace.",
@@ -1093,8 +1095,8 @@ skel = {
 		"charlatan": {
 			".": "1",
 			"background": ["charlatan"],
-			"desc": "Charlatans are colorful characters who conceal their true selves behind the masks they construct. They reflect what people want to see, what they want to believe, and how they see the world. But their true selves are sometimes plagued by an uneasy conscience, an old enemy, or deep-seated trust issues.",
-			"scheme": [
+			"desc": ["Charlatans are colorful characters who conceal their true selves behind the masks they construct. They reflect what people want to see, what they want to believe, and how they see the world. But their true selves are sometimes plagued by an uneasy conscience, an old enemy, or deep-seated trust issues.",],
+			"specialty": [
 				"I cheat at games of chance.",
 				"I shave coins or forge documents.",
 				"I insinuate myself into people's lives to prey on their weakness and secure their fortunes.",
@@ -1140,7 +1142,7 @@ skel = {
 		"criminal": {
 			".": "1",
 			"background": ["criminal"],
-			"desc": "Criminals might seem like villains on the surface, and many of them are villainous to the core. But some have an abundance of endearing, if not redeeming, characteristics. There might be honor among thieves, but criminals rarely show any respect for law or authority.",
+			"desc": ["Criminals might seem like villains on the surface, and many of them are villainous to the core. But some have an abundance of endearing, if not redeeming, characteristics. There might be honor among thieves, but criminals rarely show any respect for law or authority.",],
 			"specialty": [
 				"Blackmailer",
 				"Burglar",
@@ -1189,8 +1191,8 @@ skel = {
 		"entertainer": {
 			".": "1",
 			"background": ["entertainer"],
-			"desc": "Successful entertainers have to be able to capture and hold an audience's attention, so they tend to have flamboyant or forceful personalities. They're inclined toward the romantic and often cling to high-minded ideals about the practice of art and the appreciation of beauty.",
-			"routine": [
+			"desc": ["Successful entertainers have to be able to capture and hold an audience's attention, so they tend to have flamboyant or forceful personalities. They're inclined toward the romantic and often cling to high-minded ideals about the practice of art and the appreciation of beauty.",],
+			"specialty": [
 				"Actor",
 				"Dancer",
 				"Fire-eater",
@@ -1240,8 +1242,8 @@ skel = {
 		"hero": {
 			".": "1",
 			"background": ["hero"],
-			"desc": "A folk hero is one of the common people, for better or for worse. Most folk heroes look on their humble origins as a virtue, not a shortcoming, and their home communities remain very important to them.",
-			"event": [
+			"desc": ["A folk hero is one of the common people, for better or for worse. Most folk heroes look on their humble origins as a virtue, not a shortcoming, and their home communities remain very important to them.",],
+			"specialty": [
 				"I stood up to a tyrant's agents.",
 				"I saved people during a natural disaster.",
 				"I stood alone against a terrible monster.",
@@ -1291,8 +1293,8 @@ skel = {
 		"artisan": {
 			".": "1",
 			"background": ["artisan"],
-			"desc": "Guild artisans are among the most ordinary people in the world — until they set down their tools and take up an adventuring career. They understand the value of hard work and the importance of community, but they're vulnerable to sins of greed and covetousness.",
-			"business": [
+			"desc": ["Guild artisans are among the most ordinary people in the world — until they set down their tools and take up an adventuring career. They understand the value of hard work and the importance of community, but they're vulnerable to sins of greed and covetousness.",],
+			"specialty": [
 				"Alchemists and apothecaries",
 				"Armorers, locksmiths, and finesmiths",
 				"Brewers, distillers, and vintners",
@@ -1352,8 +1354,8 @@ skel = {
 		"hermit": {
 			".": "1",
 			"background": ["hermit"],
-			"desc": "ome hermits are well suited to a life of seclusion, whereas others chafe against it and long for company. Whether they em brace solitude or long to escape it, the solitary life shapes their attitudes and ideals. A few are driven slightly mad by their years apart from society.",
-			"seclusion": [
+			"desc": ["ome hermits are well suited to a life of seclusion, whereas others chafe against it and long for company. Whether they em brace solitude or long to escape it, the solitary life shapes their attitudes and ideals. A few are driven slightly mad by their years apart from society.",],
+			"specialty": [
 				"I was searching for spiritual enlightenment.",
 				"I was partaking of communal living in accordance with the dictates of a religious order.",
 				"I was exiled for a crime I didn't commit.",
@@ -1401,7 +1403,8 @@ skel = {
 		"noble": {
 			".": "1",
 			"background": ["noble"],
-			"desc": "Nobles are born and raised to a very different lifestyle than most people ever experience, and their personalities reflect that upbringing. A noble title comes with a plethora of bonds — responsibilities to family, to other nobles (including the sovereign), to the people entrusted to the family's care, or even to the title itself. But this responsibility is often a good way to undermine a noble.",
+			"desc": ["Nobles are born and raised to a very different lifestyle than most people ever experience, and their personalities reflect that upbringing. A noble title comes with a plethora of bonds — responsibilities to family, to other nobles (including the sovereign), to the people entrusted to the family's care, or even to the title itself. But this responsibility is often a good way to undermine a noble.",],
+			"specialty": ["",],
 			"trait": [
 				"My eloquent flattery makes everyone I talk to feel like the most wonderful and important person in the world.",
 				"The common folk love me for my kindness and generosity.",
@@ -1440,8 +1443,8 @@ skel = {
 		"outlander": {
 			".": "1",
 			"background": ["outlander"],
-			"desc": "Often considered rude and uncouth among civilized folk, outlanders have little respect for the niceties of life in the cities. The ties of tribe, clan, family, and the natural world of which they are a part are the most important bonds to most outlanders.",
-			"origin": [
+			"desc": ["Often considered rude and uncouth among civilized folk, outlanders have little respect for the niceties of life in the cities. The ties of tribe, clan, family, and the natural world of which they are a part are the most important bonds to most outlanders.",],
+			"specialty": [
 				"Forester",
 				"Trapper",
 				"Homesteader",
@@ -1491,7 +1494,7 @@ skel = {
 		"sage": {
 			".": "1",
 			"background": ["sage"],
-			"desc": "Sages are defined by their extensive studies, and their characteristics reflect this life of study. Devoted to scholarly pursuits, a sage values knowledge highly — sometimes in its own right, sometimes as a means toward other ideals.",
+			"desc": ["Sages are defined by their extensive studies, and their characteristics reflect this life of study. Devoted to scholarly pursuits, a sage values knowledge highly — sometimes in its own right, sometimes as a means toward other ideals.",],
 			"specialty": [
 				"Alchemist",
 				"Astronomer",
@@ -1540,7 +1543,8 @@ skel = {
 		"sailor": {
 			".": "1",
 			"background": ["sailor"],
-			"desc": "Sailors can be a rough lot, but the responsibilities of life on a ship make them generally reliable as well. Life aboard a ship shapes their outlook and forms their most important attachments.",
+			"desc": ["Sailors can be a rough lot, but the responsibilities of life on a ship make them generally reliable as well. Life aboard a ship shapes their outlook and forms their most important attachments.",],
+			"specialty": ["",],
 			"trait": [
 				"My friends know they can rely on me, no matter what.",
 				"I work hard so that I can play hard when the work is done.",
@@ -1579,7 +1583,7 @@ skel = {
 		"soldier": {
 			".": "1",
 			"background": ["soldier"],
-			"desc": "The horrors of war combined with the rigid discipline of military service leave their mark on all soldiers, shaping their ideals, creating strong bonds, and often leaving them scarred and vulnerable to fear, shame, and hatred.",
+			"desc": ["The horrors of war combined with the rigid discipline of military service leave their mark on all soldiers, shaping their ideals, creating strong bonds, and often leaving them scarred and vulnerable to fear, shame, and hatred.",],
 			"specialty": [
 				"Officer",
 				"Scout",
@@ -1628,7 +1632,7 @@ skel = {
 		"urchin": {
 			".": "1",
 			"background": ["urchin"],
-			"desc": "Urchins are shaped by lives of desperate poverty, for good and for ill. They tend to be driven either by a commitment to the people with whom they shared life on the street or by a burning desire to find a better life — and maybe get some payback on all the rich people who treated them badly.",
+			"desc": ["Urchins are shaped by lives of desperate poverty, for good and for ill. They tend to be driven either by a commitment to the people with whom they shared life on the street or by a burning desire to find a better life — and maybe get some payback on all the rich people who treated them badly.",],
 			"trait": [
 				"I hide scraps of food and trinkets away in my pockets.",
 				"I ask a lot of questions.",
@@ -1667,7 +1671,7 @@ skel = {
 		"cook": {
 			".": "1",
 			"background": ["cook"],
-			"desc": "",
+			"desc": ["",],
 			"specialty": [
 				"Chef de Cuisine or Sous Chef, Manages the kitchen and its staff. The Chef de Cuisine is typically authorised to write and alter the menu, while a sous chef is just a manager.",
 				"Chef de Partie, Manages a portion of the kitchen staff if the team is very large. Examples include Rôtisseur (roast cook), Entremetier (entrée preparer), and Pâtissier (pastry cook). If they do the work themselves, they are called a demi-chef.",
@@ -1714,7 +1718,7 @@ skel = {
 		"keep": {
 			".": "1",
 			"background": ["keep"],
-			"desc": "",
+			"desc": ["",],
 			"specialty": [
 				"Man of Many Words - Because of the many patrons that pass through your bar you have picked up a few key phrases from other languages, you become proficient with one other standard language of your choice.",
 				"Keen Eye - Many of your regulars have sticky fingers and so you have learned to notice the smaller movements, you gain proficiency in perception.",
@@ -1761,7 +1765,7 @@ skel = {
 		"smith": {
 			".": "1",
 			"background": ["smith"],
-			"desc": "Metal workers are very personable, but also must be firm. They must deal with lots of people trying to pull a fast one on them and therefore tend to be a bit gritty. It takes a while to warm up to them, but once won over, metal workers are loyal friends for life. ",
+			"desc": ["Metal workers are very personable, but also must be firm. They must deal with lots of people trying to pull a fast one on them and therefore tend to be a bit gritty. It takes a while to warm up to them, but once won over, metal workers are loyal friends for life. ",],
 			"specialty": [
 				"Weaponsmith. A type of smith who specializes in the craft of weapons. These metalworkers typically work in bronze, iron, or steel, though very early weaponsmiths worked in copper. Specialists include arrowsmiths, who craft arrowheads, and bladesmiths, who craft fine-edged tools.",
 				"Armorer. A type of smith who specializes in the crafting of metal armor components, including rivots, buckles, studs, grommets, lames, chainmail, and even plate components.",
